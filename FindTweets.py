@@ -19,14 +19,11 @@ geocode1 = "51.5072,0.1275,100mi" #Geocode of london
 since = '2015-10-04'
 
 team1_text = ""
-#team1_list = []
+team1_list = []
 r = api.request('search/tweets', {'lang': lang, 'q': Team1, 'count': count1, 'geocode': geocode1, 'since':since, 'until':until})
 for item in r:
-    #team1_list.append(TweetInfo(item['text'],item['created_at']))
+    team1_list.append(TweetInfo(item['text'],item['created_at']))
     #print(item['text'])
-    f= open('tweets', 'w')
-	f.write(item['text']+"\n"+item['created_at']+"\n\n")
-
 
 
 Team2 = 'Manchester United'
@@ -34,13 +31,13 @@ count2 = 50
 geocode2 = "53.4667,2.2333,100mi" #geocode of Manchester
 
 team2_text = ""
-#team2_list = []
+team2_list = []
 r = api.request('search/tweets', {'lang': lang, 'q': Team2, 'count': count2, 'geocode': geocode2, 'since':since, 'until':until})
 for item in r:
-    #team2_list.append(TweetInfo(item['text'],item['created_at']))
+    team2_list.append(TweetInfo(item['text'],item['created_at']))
     #print(item['text'])
-    f= open('tweets', 'w')
-	f.write(item['text']+"\n"+item['created_at']+"\n\n")
-
-
-
+def list(self, team):
+	if team==1:
+		return team1_list
+	else:
+		return team2_list	
