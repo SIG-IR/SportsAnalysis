@@ -24,6 +24,9 @@ r = api.request('search/tweets', {'lang': lang, 'q': Team1, 'count': count1, 'ge
 for item in r:
     team1_list.append(TweetInfo(item['text'],item['created_at']))
     #print(item['text'])
+    f= open('tweets', 'w')
+	f.write(item['text']+"\n"+item['created_at']+"\n\n")
+
 
 
 Team2 = 'Manchester United'
@@ -36,6 +39,8 @@ r = api.request('search/tweets', {'lang': lang, 'q': Team2, 'count': count2, 'ge
 for item in r:
     team2_list.append(TweetInfo(item['text'],item['created_at']))
     #print(item['text'])
+    f= open('tweets', 'w')
+	f.write(item['text']+"\n"+item['created_at']+"\n\n")
 
 
 
