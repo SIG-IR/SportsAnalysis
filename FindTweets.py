@@ -5,9 +5,13 @@ import json
 from TweetInfo import TweetInfo
 
 from TwitterAPI import TwitterAPI
+from alchemyapi import AlchemyAPI
 
 
-from TwitterKeys import CONSUMER_KEY,CONSUMER_SECRET, ACCESS_TOKEN_SECRET, ACCESS_TOKEN_KEY
+CONSUMER_KEY = "LEmiWmBGI2Bnr4dFuKUrgaw3E"
+CONSUMER_SECRET = "DaTDMJua3GriyWWlCyFQySeEwabw8plpTPviF8KFOUOEGjqpHn"
+ACCESS_TOKEN_KEY = "176509780-cGFgCvxeX9riOUakS4NWWxWbu6I5wmYL97rp9zWz"
+ACCESS_TOKEN_SECRET = "qbKgcCPcOr33qatWJQFfr2A1LQpTIHkEUe06YX4pSqIk7"
 
 api = TwitterAPI(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_TOKEN_KEY,ACCESS_TOKEN_SECRET)
 
@@ -36,8 +40,24 @@ r = api.request('search/tweets', {'lang': lang, 'q': Team2, 'count': count2, 'ge
 for item in r:
     team2_list.append(TweetInfo(item['text'],item['created_at']))
     #print(item['text'])
-def list(self, team):
-	if team==1:
-		return team1_list
-	else:
-		return team2_list	
+
+alchemyapi = AlchemyAPI()
+sentiment1 = [0.0,0.0]
+sentiment2 = [0.0,0.0]
+
+counter1 = 0;
+counter2 = 0;
+
+for i in xrange(len(team1_list)):
+    response = alchemyapi.sentiment('html', team1_list[i])
+    if response['status'] == 'OK':
+        response['usage'] = ''
+        if 'score' in response['docSentiment']:
+            if(float(response['docSentiment']['score']) < 0):
+                sentiment[0] += 1
+            else:
+                sentiment[1] += 1
+            #print('positive sentiment score: ', response['docSentiment']['score'])
+            counter += 1
+    else:
+        print('Error in sentiment analysis call: ', response['statusInfo'])
